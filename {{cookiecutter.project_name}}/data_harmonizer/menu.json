@@ -1,0 +1,9 @@
+{
+  "DataHarmonizer": {
+    "Person": {
+      "name": "Person",
+      "status": "published",
+      "display": true
+    }
+  }
+}
