@@ -210,3 +210,10 @@ target/usage_template.tsv: src/{{cookiecutter.__project_slug}}/schema/{{cookiecu
 		 --meta-path https://raw.githubusercontent.com/linkml/linkml-model/main/linkml_model/model/schema/meta.yaml \
 		 --schema-path $< \
 		 --selected-sheet slot_definition
+
+project/json/{{cookiecutter.__project_slug}}.json: src/{{cookiecutter.__project_slug}}/schema/{{cookiecutter.__project_slug}}.yaml
+	mkdir -p $(@D)
+	$(RUN) gen-linkml \
+		--format json  \
+		--materialize-attributes \
+		--materialize-patterns $< > $@
