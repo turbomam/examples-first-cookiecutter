@@ -3,4 +3,3 @@ entries:
     name: foo bar
   - id: example:{{cookiecutter.main_schema_class}}001
     name: foo bar
-    undefined: undefined
