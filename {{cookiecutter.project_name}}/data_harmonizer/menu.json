@@ -1,5 +1,5 @@
 {
-  "DataHarmonizer": {
+  "{{cookiecutter.__project_slug}}": {
     "Person": {
       "name": "Person",
       "status": "published",
