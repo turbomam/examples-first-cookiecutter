@@ -25,7 +25,6 @@ src/data/dh_vs_linkml_json/{{cookiecutter.main_schema_class}}Collection_linkml_r
 		--output-format yaml \
 		--key entries
 
-
 src/data/dh_vs_linkml_json/{{cookiecutter.main_schema_class}}Collection_linkml_normalized.yaml: src/data/dh_vs_linkml_json/{{cookiecutter.main_schema_class}}Collection_linkml_raw.yaml
 	$(RUN) linkml-normalize \
 		--schema {{cookiecutter.__source_path}} \
@@ -38,8 +37,9 @@ src/data/dh_vs_linkml_json/entries.json: src/data/dh_vs_linkml_json/{{cookiecutt
 		--input-format yaml \
 		--output-dir $(dir $@)
 
-project/reports/slot_usage_esp_validation.tsv:
-	linkml2sheets \
-		--schema {{cookiecutter.__source_path}} \
-		--output $@ \
-		src/local_schemasheets/templates/slot_usage_esp_validation.tsv
+# # deprecated by generate-and-populate-template in Makefile
+#project/reports/slot_usage_esp_validation.tsv:
+#	linkml2sheets \
+#		--schema {{cookiecutter.__source_path}} \
+#		--output $@ \
+#		src/local_schemasheets/templates/slot_usage_esp_validation.tsv

@@ -88,7 +88,7 @@ create-data-harmonizer:
 	npm init data-harmonizer $(SOURCE_SCHEMA_PATH)
 
 all: site
-site: gen-project gendoc
+site: gen-project gendoc project/json/{{cookiecutter.__project_slug}}.json
 %.yaml: gen-project
 deploy: all mkd-gh-deploy
 
@@ -179,7 +179,7 @@ git-init-add: git-init git-add git-commit git-status
 git-init:
 	git init
 git-add: .cruft.json
-	git add .gitignore .github .cruft.json Makefile LICENSE *.md examples utils about.yaml mkdocs.yml poetry.lock project.Makefile pyproject.toml src/{{cookiecutter.__project_slug}}/schema/*yaml src/*/datamodel/*py src/data src/docs tests src/*/_version.py project/reports/ src/local_schemasheets/
+	git add .gitignore .github .cruft.json Makefile LICENSE *.md examples utils about.yaml mkdocs.yml poetry.lock project.Makefile pyproject.toml src/{{cookiecutter.__project_slug}}/schema/*yaml src/*/datamodel/*py src/data src/docs tests src/*/_version.py project/reports/ src/local_schemasheets/ data_harmonizer/
 	git add $(patsubst %, project/%, $(PROJECT_FOLDERS))
 git-commit:
 	git commit -m 'chore: initial commit' -a
@@ -195,8 +195,6 @@ clean:
 	rm -rf $(DEST)
 	rm -rf tmp
 	rm -fr docs/*
-
-include project.Makefile
 
 target/usage_template.tsv: src/{{cookiecutter.__project_slug}}/schema/{{cookiecutter.__project_slug}}.yaml
 	mkdir -p $(dir $@)
@@ -217,3 +215,6 @@ project/json/{{cookiecutter.__project_slug}}.json: src/{{cookiecutter.__project_
 		--format json  \
 		--materialize-attributes \
 		--materialize-patterns $< > $@
+
+include project.Makefile
+
