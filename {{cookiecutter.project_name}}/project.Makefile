@@ -4,13 +4,6 @@ RUN = poetry run
 
 .PHONY: check-jsonschema-example run-linkml-validation check-all-invalid-examples check-all-valid-examples
 
-#check-jsonschema-example: project/jsonschema/{{cookiecutter.__project_slug}}.schema.json \
-#	  src/data/examples/invalid/{{cookiecutter.main_schema_class}}Collection-undefined-slot.yaml
-#	# showing ignore failures here
-#	# this should be templated
-#	- $(RUN) check-jsonschema \
-#	  --schemafile $^
-
 JSON_SCHEMA_FILE := project/jsonschema/{{cookiecutter.__project_slug}}.schema.json
 INVALID_EXAMPLES_DIR := src/data/examples/invalid
 INVALID_EXAMPLE_FILES := $(wildcard src/data/examples/invalid/*.yaml)
@@ -27,9 +20,10 @@ check-all-valid-examples: $(patsubst $(VALID_EXAMPLES_DIR)/%.yaml,jsonschema-vs-
 jsonschema-vs-valid-%: $(JSON_SCHEMA_FILE) $(VALID_EXAMPLES_DIR)/%.yaml
 	$(RUN) check-jsonschema --schemafile $^
 
+
 run-linkml-validation: {{cookiecutter.__source_path}} \
 src/data/examples/invalid/{{cookiecutter.main_schema_class}}Collection-undefined-slot.yaml
-	# PersonCollection is assumed as the target-class because it has been defined as the tree_root in the schema
+	# {{cookiecutter.main_schema_class}}Collection is assumed as the target-class because it has been defined as the tree_root in the schema
 	- $(RUN) linkml-validate \
 	  --schema $^
 
@@ -52,10 +46,3 @@ src/data/dh_vs_linkml_json/entries.json: src/data/dh_vs_linkml_json/{{cookiecutt
 		--input-file $< \
 		--input-format yaml \
 		--output-dir $(dir $@)
-
-# # deprecated by generate-and-populate-template in Makefile
-#project/reports/slot_usage_esp_validation.tsv:
-#	linkml2sheets \
-#		--schema {{cookiecutter.__source_path}} \
-#		--output $@ \
-#		src/local_schemasheets/templates/slot_usage_esp_validation.tsv
