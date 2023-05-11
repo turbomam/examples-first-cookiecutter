@@ -11,7 +11,7 @@ RUN = poetry run
 #	- $(RUN) check-jsonschema \
 #	  --schemafile $^
 
-JSON_SCHEMA_FILE := project/jsonschema/{{cookiecutter.main_schema_class}}.schema.json
+JSON_SCHEMA_FILE := project/jsonschema/{{cookiecutter.__project_slug}}.schema.json
 INVALID_EXAMPLES_DIR := src/data/examples/invalid
 INVALID_EXAMPLE_FILES := $(wildcard src/data/examples/invalid/*.yaml)
 VALID_EXAMPLES_DIR := src/data/examples/valid
