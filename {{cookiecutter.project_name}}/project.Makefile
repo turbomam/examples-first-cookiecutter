@@ -2,14 +2,30 @@
 
 RUN = poetry run
 
-.PHONY: check-jsonschema-example run-linkml-validation
+.PHONY: check-jsonschema-example run-linkml-validation check-all-invalid-examples check-all-valid-examples
 
-check-jsonschema-example: project/jsonschema/{{cookiecutter.__project_slug}}.schema.json \
-	  src/data/examples/invalid/{{cookiecutter.main_schema_class}}Collection-undefined-slot.yaml
-	# showing ignore failures here
-	# this should be templated
-	- $(RUN) check-jsonschema \
-	  --schemafile $^
+#check-jsonschema-example: project/jsonschema/{{cookiecutter.__project_slug}}.schema.json \
+#	  src/data/examples/invalid/{{cookiecutter.main_schema_class}}Collection-undefined-slot.yaml
+#	# showing ignore failures here
+#	# this should be templated
+#	- $(RUN) check-jsonschema \
+#	  --schemafile $^
+
+JSON_SCHEMA_FILE := project/jsonschema/{{cookiecutter.main_schema_class}}.schema.json
+INVALID_EXAMPLES_DIR := src/data/examples/invalid
+INVALID_EXAMPLE_FILES := $(wildcard src/data/examples/invalid/*.yaml)
+VALID_EXAMPLES_DIR := src/data/examples/valid
+VALID_EXAMPLE_FILES := $(wildcard src/data/examples/valid/*.yaml)
+
+check-all-invalid-examples: $(patsubst $(INVALID_EXAMPLES_DIR)/%.yaml,jsonschema-vs-invalid--%,$(INVALID_EXAMPLE_FILES))
+
+jsonschema-vs-invalid--%: $(JSON_SCHEMA_FILE) $(INVALID_EXAMPLES_DIR)/%.yaml
+	! $(RUN) check-jsonschema --schemafile $^
+
+check-all-valid-examples: $(patsubst $(VALID_EXAMPLES_DIR)/%.yaml,jsonschema-vs-valid-%,$(VALID_EXAMPLE_FILES))
+
+jsonschema-vs-valid-%: $(JSON_SCHEMA_FILE) $(VALID_EXAMPLES_DIR)/%.yaml
+	$(RUN) check-jsonschema --schemafile $^
 
 run-linkml-validation: {{cookiecutter.__source_path}} \
 src/data/examples/invalid/{{cookiecutter.main_schema_class}}Collection-undefined-slot.yaml
