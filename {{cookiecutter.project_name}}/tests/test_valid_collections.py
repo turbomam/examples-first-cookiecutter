@@ -22,6 +22,8 @@ class TestData(unittest.TestCase):
     def test_data(self):
         """Date test."""
         for path in EXAMPLE_FILES:
+            print()
+            print(f"Testing {path}")
             if path.startswith(ACCEPTABLE_PREFIX):
                 obj = yaml_loader.load(path, target_class={{cookiecutter.main_schema_class}}Collection)
                 assert obj
