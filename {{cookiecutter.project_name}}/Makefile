@@ -199,15 +199,13 @@ clean:
 target/usage_template.tsv: src/{{cookiecutter.__project_slug}}/schema/{{cookiecutter.__project_slug}}.yaml
 	mkdir -p $(dir $@)
 	$(RUN) generate-and-populate-template \
-		 --columns-to-insert slot \
+		 --base-class slot_definition \
 		 --columns-to-insert class \
-		 --columns-to-remove annotations \
-		 --columns-to-remove name \
+		 --columns-to-insert slot \
 		 --destination-template $@ \
-		 --intermediate-excel-file target/meta.xlsx \
+		 --meta-model-excel-file target/meta.xlsx \
 		 --meta-path https://raw.githubusercontent.com/linkml/linkml-model/main/linkml_model/model/schema/meta.yaml \
-		 --schema-path $< \
-		 --selected-sheet slot_definition
+		 --source-schema-path $<
 
 project/json/{{cookiecutter.__project_slug}}.json: src/{{cookiecutter.__project_slug}}/schema/{{cookiecutter.__project_slug}}.yaml
 	mkdir -p $(@D)

@@ -10,6 +10,14 @@ INVALID_EXAMPLE_FILES := $(wildcard src/data/examples/invalid/*.yaml)
 VALID_EXAMPLES_DIR := src/data/examples/valid
 VALID_EXAMPLE_FILES := $(wildcard src/data/examples/valid/*.yaml)
 
+# the check-jsonschema utility can be used to check JSON or YAML data
+#  against the JSON schema generated from teh LinkML schema
+# Future versions of LinkML will include reporting of all errors like check-jsonschema
+#  at which time these tests will be rewritten
+# see https://github.com/turbomam/examples-first-cookiecutter/issues/99
+
+jsonschema-check-all-examples: check-all-invalid-examples check-all-valid-examples
+
 check-all-invalid-examples: $(patsubst $(INVALID_EXAMPLES_DIR)/%.yaml,jsonschema-vs-invalid--%,$(INVALID_EXAMPLE_FILES))
 
 jsonschema-vs-invalid--%: $(JSON_SCHEMA_FILE) $(INVALID_EXAMPLES_DIR)/%.yaml
