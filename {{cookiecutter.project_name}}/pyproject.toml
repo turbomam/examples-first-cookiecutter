@@ -22,7 +22,7 @@ mkdocs-material = "^8.2.8"
 mkdocs-mermaid2-plugin = "^0.6.0"
 schemasheets = "^0.1.14"
 check-jsonschema = "^0.22.0"
-pandas = "^2.0.1"
+gen-pop-linkml2sheets = "^0.1.7"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
@@ -34,4 +34,3 @@ docs = ["linkml", "mkdocs-material"]
 [tool.poetry.scripts]
 dh-json2linkml = 'src.{{cookiecutter.__project_slug}}.datamodel.dh_json2linkml:update_json'
 linkml-json2dh = 'src.{{cookiecutter.__project_slug}}.datamodel.linkml_json2dh:extract_lists'
-generate-and-populate-template = 'src.{{cookiecutter.__project_slug}}.datamodel.generate_and_populate_template:generate_and_populate_template'
